@@ -20,8 +20,8 @@ class Settings:
     # hinzugefügt worden sein (s. bot_tokens.env), sonst schlägt das Posten fehl.
     webex_space_id: str = os.getenv("WEBEX_SPACE_ID", "")
 
-    # Komma-getrennte Liste von Warteschlangen-Nummern (DNIS), auf die verpasste
-    # Anrufe eingeschränkt werden sollen, z. B. "+4989248815150,+4989248815199".
+    # Komma-getrennte Liste von Warteschlangen-Nummern (DNIS, internationales
+    # Format), auf die verpasste Anrufe eingeschränkt werden sollen.
     # Leer (Default) = KEIN Filter, jeder nie beantwortete eingehende Anruf zählt,
     # auch Direktanrufe ohne Warteschlange. Die Nummer steht im telephony_calls-
     # Event unter data.redirections[].redirectingParty.number (nur vorhanden, wenn
@@ -66,11 +66,11 @@ class Settings:
     mail_from: str = os.getenv("MAIL_FROM", "")
     # Fallback-Empfänger (komma-getrennt), falls für die jeweilige Warteschlange KEIN
     # Eintrag in QUEUE_MAIL_ROUTES existiert (oder der Anruf keiner Warteschlange
-    # zuordenbar war) -- z. B. "office@example.com".
+    # zuordenbar war).
     mail_to: str = os.getenv("MAIL_TO", "")
     # Mehrere Warteschlangen -> verschiedene Postfächer: Format
-    # "<queueNumber>=<mail1>,<mail2>;<queueNumber2>=<mail3>", z. B.
-    # "+4989248815150=office@example.com;+4989248815199=support@example.com"
+    # "<queueNumber>=<mail1>,<mail2>;<queueNumber2>=<mail3>" (Semikolon trennt
+    # Warteschlangen, Komma trennt mehrere Empfänger pro Warteschlange).
     # Leer (Default) = alle verpassten Anrufe gehen an MAIL_TO, unabhängig von der
     # Warteschlange. Die Nummer muss exakt der DNIS aus data.redirections entsprechen
     # (s. call_session_tracker.py) -- Groß-/Kleinschreibung und Leerzeichen egal,

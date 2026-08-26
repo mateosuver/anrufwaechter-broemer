@@ -20,6 +20,13 @@ import os
 import time
 
 os.environ["WEBEX_WEBHOOK_SECRET"] = ""
+# BUGFIX: WEBEX_BOT_TOKEN wurde bisher NICHT hier gesetzt -- der Test verliess
+# sich stillschweigend darauf, dass eine echte .env im cwd zufällig einen
+# Bot-Token mitbringt. Ohne (z. B. in einem frischen Checkout ohne .env)
+# überspringt main.py die Karte jetzt korrekt (s. main.py), wodurch Szenario 1
+# unten fälschlich fehlschlug. Test muss sich selbst isolieren, nicht auf
+# Umgebungszustand von außen verlassen.
+os.environ["WEBEX_BOT_TOKEN"] = "test-bot-token"
 os.environ["WEBEX_SPACE_ID"] = "Y2lzY29zcGFyazovL1JPT00vdGVzdA"
 os.environ["GRAPH_CLIENT_ID"] = ""
 os.environ["GRAPH_TENANT_ID"] = ""
@@ -78,7 +85,7 @@ ACTION_FIXTURES = {
 
 
 def _queue_call_data(session_id, call_id, *, with_redirect=True, personality="terminator",
-                      answered=False, number="+4917662282090"):
+                      answered=False, number="TEST-CALLER"):
     """Baut ein realistisches telephony_calls data-Objekt, s. call_session_tracker.py."""
     data = {
         "eventType": "answered" if answered else "disconnected",
@@ -95,7 +102,7 @@ def _queue_call_data(session_id, call_id, *, with_redirect=True, personality="te
     if with_redirect:
         data["redirections"] = [{
             "reason": "callQueue",
-            "redirectingParty": {"name": "Zentrale", "number": "+4989248815150", "idType": "CALL_QUEUE"},
+            "redirectingParty": {"name": "Test-Warteschlange", "number": "TEST-QUEUE", "idType": "CALL_QUEUE"},
         }]
     return data
 

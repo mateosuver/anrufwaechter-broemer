@@ -48,8 +48,8 @@ main.py-Log) zeigte den Unterschied klar:
     personality="terminator", eventType beim ersten Event="received", UND
     ein `redirections`-Feld:
         "redirections": [{"reason": "callQueue",
-                           "redirectingParty": {"name": "Zentrale",
-                                                 "number": "+4989...",
+                           "redirectingParty": {"name": "<Warteschlangenname>",
+                                                 "number": "<DNIS>",
                                                  "idType": "CALL_QUEUE", ...}}]
 
   - Eigener, nicht angenommener Rückruf: personality="originator",

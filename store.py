@@ -39,8 +39,8 @@ class MissedCallRecord:
     caller_name: Optional[str]
     queue_name: str
     timestamp_iso: str
-    # DNIS der Warteschlange (z. B. "+4989248815150") -- die tatsächlich angerufene
-    # Nummer, nicht die des Anrufers. None, falls keine Warteschlange zuordenbar war.
+    # DNIS der Warteschlange -- die tatsächlich angerufene Nummer, nicht die des
+    # Anrufers. None, falls keine Warteschlange zuordenbar war.
     queue_number: Optional[str] = None
 
     # Wird gesetzt, sobald die Karte in einer Webex-Space gepostet wurde.
